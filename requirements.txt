@@ -1,0 +1,32 @@
+# Base
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+tqdm>=4.66.1
+numpy>=1.24.0
+
+# LLM & Embeddings (v2: Zero-Compile Architecture)
+openai>=1.0.0  # OpenAI API client for llama-server
+sentence-transformers>=2.2.2  # For embeddings (fallback)
+
+# Hardware Detection
+psutil>=5.9.0  # System and hardware detection
+GPUtil>=1.4.0  # GPU detection (optional)
+nvidia-ml-py>=12.0.0  # NVIDIA GPU monitoring (optional, replaces deprecated pynvml)
+
+# Vector Store
+chromadb>=0.4.14
+rank-bm25>=0.2.2  # BM25 for sparse retrieval (Hybrid Search)
+pypdf2>=3.0.0
+python-docx>=0.8.11
+beautifulsoup4>=4.12.0
+markdown>=3.5.1
+docx2txt>=0.8
+
+# HTTP Requests
+requests>=2.31.0
+
+# Development
+pytest>=7.4.0
+black>=23.3.0
+isort>=5.12.0
+pylint>=2.17.4
