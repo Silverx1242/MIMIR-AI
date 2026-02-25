@@ -41,4 +41,8 @@ class KnowledgeBaseManager:
         # Hybrid search: dense + sparse (BM25)
         # For now, only dense (ChromaDB) for simplicity
         results = self.collection.query(query_texts=[query], n_results=top_k)
-        return [{"content": doc, **meta} for doc, meta in zip(results["documents"][0], results["metadatas"][0])]
+        documents = results.get("documents")
+        metadatas = results.get("metadatas")
+        if not documents or not metadatas or documents[0] is None or metadatas[0] is None:
+            return []
+        return [{"content": doc, **meta} for doc, meta in zip(documents[0], metadatas[0])]
