@@ -7,7 +7,6 @@ import hashlib
 from pathlib import Path
 import chromadb
 from chromadb.config import Settings
-import asyncio
 
 class MemoryManager:
     def __init__(self, db_path: str, collection_name: str = "episodic_memory"):
@@ -15,6 +14,28 @@ class MemoryManager:
         self.collection_name = collection_name
         self.client = chromadb.PersistentClient(path=db_path, settings=Settings(anonymized_telemetry=False))
         self.collection = self.client.get_or_create_collection(name=collection_name)
+        self.documents = []  # Lista de documentos en memoria
+        self.counter = 1     # Para IDs únicos
+
+    def add_document(self, text):
+        doc = {
+            "doc_id": f"doc_{self.counter}",
+            "filename": "Sin nombre",
+            "source": "manual",
+            "num_chunks": 1,
+            "content": text
+        }
+        self.documents.append(doc)
+        self.counter += 1
+        return doc["doc_id"]
+
+    def list_documents(self):
+        return self.documents
+
+    def clear(self):
+        self.documents.clear()
+        self.counter = 1
+        return True
 
     async def add_message(self, session_id: str, message: str, metadata: Dict[str, Any]) -> None:
         msg_hash = hashlib.sha256((session_id + message).encode("utf-8")).hexdigest()
