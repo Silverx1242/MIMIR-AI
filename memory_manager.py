@@ -33,7 +33,7 @@ class MemoryManager:
         )
         if not results.get("documents") or not results.get("metadatas"):
             return []
-        return [{"content": doc, **meta} for doc, meta in zip(results["documents"][0], results["metadatas"][0])]
+        return [{"content": doc, **meta} for doc, meta in zip(results["documents"][0], results["metadatas"][0])] # type: ignore
 
     async def summarize_history(self, llm_client, session_id: str) -> None:
         # Get all messages for session
